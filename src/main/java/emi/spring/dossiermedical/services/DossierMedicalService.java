@@ -39,13 +39,17 @@ public class DossierMedicalService {
         return dossierMedical.orElse(null);
     }
 
-    public ResponseEntity<String> addFicheDeSoinAuDossier(FicheDeSoin ficheDeSoin, int id) {
+    public ResponseEntity<String> addFicheDeSoinAuDossier(int id_ficheDeSoin, int id) {
         if(this.getDossierMedicalById(id) != null) {
-            FicheDeSoin fiche = ficheDeSoinService.create(ficheDeSoin);
-            DossierMedical dossierMedical = this.getDossierMedicalById(id);
-            fiche.setDossierMedical(dossierMedical);
-            dossierMedical.getFichesDeSoins().add(fiche);
-            return ResponseEntity.status(200).body("ajout effectué avec succes!");
+            if(ficheDeSoinService.getFicheDeSoinById(id_ficheDeSoin) != null) {
+                DossierMedical dossierMedical = this.getDossierMedicalById(id);
+                FicheDeSoin fiche = ficheDeSoinService.getFicheDeSoinById(id_ficheDeSoin);
+                dossierMedical.getFichesDeSoins().add(fiche);
+                return ResponseEntity.status(200).body("ajout effectué avec succes!");
+            }
+            else{
+                return ResponseEntity.status(400).body("Fiche de soin avec l'ID " + id_ficheDeSoin + " introuvable.");
+            }
         }
         else {
             return ResponseEntity.status(404).body("Dossier médical avec l'ID " + id + " introuvable.");
@@ -89,7 +93,7 @@ public class DossierMedicalService {
         Optional<DossierMedical> dossierMedicalOptional = dossierMedicalRepository.findById(id);
         if (dossierMedicalOptional.isPresent()) {
             DossierMedical dossierMedical = dossierMedicalOptional.get();
-            dossierMedical.getFichesDeSoins().forEach(fiche -> fiche.setDossierMedical(null));
+            dossierMedical.getFichesDeSoins().forEach(fiche -> ficheDeSoinService.delete(fiche.getNumeroFiche()));
         }
         dossierMedicalRepository.deleteById(id);
 

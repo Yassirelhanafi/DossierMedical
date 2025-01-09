@@ -43,9 +43,9 @@ public class DossierMedicalController {
     }
 
 
-    @PatchMapping("/addFichetoDossier/{id}")
-    public ResponseEntity<String> addFicheDeSoinAuDossier(@RequestBody FicheDeSoin ficheDeSoin, @PathVariable int id) {
-        return dossierMedicalService.addFicheDeSoinAuDossier(ficheDeSoin, id);
+    @PatchMapping("/addFichetoDossier/{id}/{id_fiche}")
+    public ResponseEntity<String> addFicheDeSoinAuDossier(@PathVariable int id_fiche, @PathVariable int id) {
+        return dossierMedicalService.addFicheDeSoinAuDossier(id_fiche, id);
     }
 
     @PatchMapping("/removeFromDossier/{id}/{id_fichier}")

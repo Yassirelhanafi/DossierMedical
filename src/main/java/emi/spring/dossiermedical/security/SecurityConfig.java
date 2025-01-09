@@ -60,7 +60,8 @@ public class SecurityConfig {
                                 .requestMatchers("/ficheConsultation/**").hasRole("agentMedical")
                                 .requestMatchers("/**").hasRole("admin")
 
-                        );
+                        ).httpBasic(Customizer.withDefaults());
+        return http.build();
 
 
     }

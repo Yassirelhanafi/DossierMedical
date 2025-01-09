@@ -61,7 +61,17 @@ public class FicheConsultationService {
     }
 
     public void delete(int id) {
-        ficheConsultationRepository.deleteById(id);
+        Optional<FicheConsultation> ficheConsultationOptional = ficheConsultationRepository.findById(id);
+        if (ficheConsultationOptional.isPresent()) {
+            FicheConsultation ficheConsultation = ficheConsultationOptional.get();
+            ficheConsultation.getPrescriptions().forEach(prescription -> prescriptionService.delete(prescription.getId()));
+            ficheConsultation.getOperationAnalyses().forEach(operation -> operationAnalyseService.delete(operation.getId()));
+            ficheConsultationRepository.deleteById(id);
+        }
+        else {
+            new ResponseEntity<>("ficheConsultation introuvable",HttpStatus.NOT_FOUND);
+        }
+
     }
 
 
