@@ -30,8 +30,8 @@ public class DossierMedicalService {
     }
 
     public DossierMedical create(DossierMedical dossierMedical) {
+            return dossierMedicalRepository.save(dossierMedical);
 
-        return dossierMedicalRepository.save(dossierMedical);
     }
 
     public DossierMedical getDossierMedicalById(int id) {

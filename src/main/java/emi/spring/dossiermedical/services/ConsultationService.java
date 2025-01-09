@@ -4,7 +4,6 @@ import emi.spring.dossiermedical.entities.Consultation;
 import emi.spring.dossiermedical.repositories.ConsultationRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 

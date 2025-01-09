@@ -6,6 +6,8 @@ import emi.spring.dossiermedical.repositories.DossierMedicalRepository;
 import emi.spring.dossiermedical.repositories.PatientRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,15 +27,27 @@ public class PatientService {
         this.dossierMedicalService = dossierMedicalService;
     }
 
+//    public Patient create(Patient patient) {
+//
+//        try (patient.getDossierMedical() != null){
+//            return patientRepository.save(patient);
+//
+//        }
+//        return patientRepository.save(patient);
+//    }
+
     public Patient create(Patient patient) {
-        return patientRepository.save(patient);
+        if(patient.getDossierMedical() != null) {
+                Patient patientcree = patientRepository.save(patient);
+                new ResponseEntity<>("Patient created", HttpStatus.CREATED);
+                return patientcree;
+        }
+        else{
+            new ResponseEntity<>("DossierMedical n'existe pas", HttpStatus.BAD_REQUEST);
+            return null;
+        }
     }
 
-    public Patient create(Patient patient, DossierMedical dossierMedical) {
-        dossierMedicalService.create(dossierMedical);
-        patient.setDossierMedical(dossierMedical);
-        return patientRepository.save(patient);
-    }
 
 
     public Patient getPatientById(Long id) {

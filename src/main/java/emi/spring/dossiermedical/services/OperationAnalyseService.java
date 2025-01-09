@@ -31,16 +31,6 @@ public class OperationAnalyseService {
         return operationAnalyseRepository.findAll();
     }
 
-//    public OperationAnalyse update(OperationAnalyse operationAnalyse, Long id) {
-//        Optional<OperationAnalyse> operationAnalyseOptional = operationAnalyseRepository.findById(id);
-//        if (operationAnalyseOptional.isPresent()) {
-//            operationAnalyseOptional.get().setDescription(operationAnalyse.getDescription());
-//            operationAnalyseOptional.get().setDateheureOperation(operationAnalyse.getDateheureOperation());
-//            operationAnalyseOptional.get().setResultat(operationAnalyse.getResultat());
-//            return operationAnalyseRepository.save(operationAnalyseOptional.get());
-//        }
-//        return operationAnalyseRepository.save(operationAnalyse);
-//    }
 
     public OperationAnalyse update(OperationAnalyse operationAnalyse, Long id) {
         if(operationAnalyseRepository.existsById(id)){

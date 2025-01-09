@@ -5,6 +5,7 @@ import emi.spring.dossiermedical.entities.FicheConsultation;
 import emi.spring.dossiermedical.repositories.FicheConsultationRepository;
 import emi.spring.dossiermedical.repositories.PrescriptionRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -28,14 +29,15 @@ public class FicheConsultationService {
     }
 
     public FicheConsultation create(FicheConsultation ficheConsultation) {
-        Consultation consultation =consultationService.create(ficheConsultation.getConsultation());
-        ficheConsultation.getConsultation().setId(consultation.getId());
-        Optional<FicheConsultation> ficheConsultationOptional = ficheConsultationRepository.findById(ficheConsultation.getNumeroFiche());
-        if(ficheConsultationOptional.isPresent()) {
-            return ficheConsultation;
+        if(ficheConsultation.getConsultation() != null && ficheConsultation.getDossierMedical() != null && ficheConsultation.getPrescriptions().size() != 0 && ficheConsultation.getOperationAnalyses().size() != 0 && ficheConsultation.getPrescriptions().size() != 0) {
+            FicheConsultation ficheConsultationcree = ficheConsultationRepository.save(ficheConsultation);
+            new ResponseEntity<>("ficheConsultation created", HttpStatus.CREATED);
+            return ficheConsultationcree;
         }
-
-        return ficheConsultationRepository.save(ficheConsultation);
+        else{
+            new ResponseEntity<>("ficheConsultation n'est pas crée", HttpStatus.BAD_REQUEST);
+            return null;
+        }
     }
 
     public FicheConsultation getFicheConsultationById(int id) {
