@@ -16,13 +16,14 @@ public class Consultation {
     private String lieu;
     private char etatConsult;
 
-    public Consultation(Long id, Date dateConsultation, String lieu, String heure, char etatConsult) {
+    public Consultation(Long id, Date dateConsultation, String heure, String lieu, char etatConsult) {
         this.id = id;
         this.dateConsultation = dateConsultation;
-        this.lieu = lieu;
         this.heure = heure;
+        this.lieu = lieu;
         this.etatConsult = etatConsult;
     }
+
 
     public Consultation() {
 

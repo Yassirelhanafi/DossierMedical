@@ -43,13 +43,13 @@ public class DossierMedicalController {
     }
 
 
-    @RequestMapping("/addFichetoDossier/{id}")
+    @PatchMapping("/addFichetoDossier/{id}")
     public ResponseEntity<String> addFicheDeSoinAuDossier(@RequestBody FicheDeSoin ficheDeSoin, @PathVariable int id) {
         return dossierMedicalService.addFicheDeSoinAuDossier(ficheDeSoin, id);
     }
 
-    @RequestMapping("/removeFromDossier/{id}/{id_fichier}")
-    public ResponseEntity<String> removeFicheDeSoinDuDossier(int id_fichier, int id) {
+    @PatchMapping("/removeFromDossier/{id}/{id_fichier}")
+    public ResponseEntity<String> removeFicheDeSoinDuDossier(@PathVariable int id_fichier, @PathVariable int id) {
         return dossierMedicalService.removeFicheDeSoinDuDossier(id_fichier, id);
     }
 }

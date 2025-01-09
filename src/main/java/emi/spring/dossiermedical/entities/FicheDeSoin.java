@@ -1,5 +1,6 @@
 package emi.spring.dossiermedical.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ public class FicheDeSoin {
 
     @ManyToOne
     @JoinColumn(name="dossier_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private DossierMedical dossierMedical;
 
     public FicheDeSoin(int numeroFiche, Date dateCreation, String agentCreateur, String addresseCreateur, DossierMedical dossierMedical) {

@@ -30,10 +30,7 @@ public class DossierMedicalService {
     }
 
     public DossierMedical create(DossierMedical dossierMedical) {
-        Optional<DossierMedical> dossier = dossierMedicalRepository.findById(dossierMedical.getId());
-        if (dossier.isPresent()) {
-            return dossier.get();
-        }
+
         return dossierMedicalRepository.save(dossierMedical);
     }
 

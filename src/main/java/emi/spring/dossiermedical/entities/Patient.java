@@ -24,7 +24,7 @@ public class Patient {
     private int numTelephone;
 
     @OneToOne
-    @JoinColumn(name="patient_id")
+    @JoinColumn(name="dossier_id")
     private DossierMedical dossierMedical;
 
     public Patient(Long id, String nSS, String prenom, String nom, Date dateNaissance, char sexe, String addresse, int numTelephone, DossierMedical dossierMedical) {

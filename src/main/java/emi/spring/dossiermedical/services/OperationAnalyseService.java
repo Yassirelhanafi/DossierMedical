@@ -19,10 +19,6 @@ public class OperationAnalyseService {
     }
 
     public OperationAnalyse create(OperationAnalyse operationAnalyse) {
-        Optional<OperationAnalyse> opAnalyse = operationAnalyseRepository.findById(operationAnalyse.getId());
-        if (opAnalyse.isPresent()) {
-            return opAnalyse.get();
-        }
         return operationAnalyseRepository.save(operationAnalyse);
     }
 
@@ -35,15 +31,25 @@ public class OperationAnalyseService {
         return operationAnalyseRepository.findAll();
     }
 
+//    public OperationAnalyse update(OperationAnalyse operationAnalyse, Long id) {
+//        Optional<OperationAnalyse> operationAnalyseOptional = operationAnalyseRepository.findById(id);
+//        if (operationAnalyseOptional.isPresent()) {
+//            operationAnalyseOptional.get().setDescription(operationAnalyse.getDescription());
+//            operationAnalyseOptional.get().setDateheureOperation(operationAnalyse.getDateheureOperation());
+//            operationAnalyseOptional.get().setResultat(operationAnalyse.getResultat());
+//            return operationAnalyseRepository.save(operationAnalyseOptional.get());
+//        }
+//        return operationAnalyseRepository.save(operationAnalyse);
+//    }
+
     public OperationAnalyse update(OperationAnalyse operationAnalyse, Long id) {
-        Optional<OperationAnalyse> operationAnalyseOptional = operationAnalyseRepository.findById(id);
-        if (operationAnalyseOptional.isPresent()) {
-            operationAnalyseOptional.get().setDescription(operationAnalyse.getDescription());
-            operationAnalyseOptional.get().setDateheureOperation(operationAnalyse.getDateheureOperation());
-            operationAnalyseOptional.get().setResultat(operationAnalyse.getResultat());
-            return operationAnalyseRepository.save(operationAnalyseOptional.get());
+        if(operationAnalyseRepository.existsById(id)){
+            operationAnalyse.setId(id);
+            return operationAnalyseRepository.save(operationAnalyse);
         }
-        return operationAnalyseRepository.save(operationAnalyse);
+        else{
+            return null;
+        }
     }
 
     public void delete(Long id) {

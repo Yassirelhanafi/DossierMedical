@@ -18,10 +18,7 @@ public class PrescriptionService {
     }
 
     public Prescription create(Prescription prescription) {
-        Optional<Prescription> prescriptionOptional = prescriptionRepository.findById(prescription.getId());
-        if (prescriptionOptional.isPresent()) {
-            return prescription;
-        }
+
         return prescriptionRepository.save(prescription);
     }
 

@@ -15,8 +15,8 @@ public class OperationAnalyse {
     private Date dateheureOperation;
     private String resultat;
 
-    public OperationAnalyse(Long id, String description, Date dateheureOperation, String resultat) {
-        this.id = id;
+    public OperationAnalyse(String description, Date dateheureOperation, String resultat) {
+
         this.description = description;
         this.dateheureOperation = dateheureOperation;
         this.resultat = resultat;

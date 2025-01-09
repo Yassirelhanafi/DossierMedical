@@ -1,9 +1,7 @@
 package emi.spring.dossiermedical.services;
 
+import emi.spring.dossiermedical.entities.*;
 import emi.spring.dossiermedical.entities.FicheConsultation;
-import emi.spring.dossiermedical.entities.FicheConsultation;
-import emi.spring.dossiermedical.entities.OperationAnalyse;
-import emi.spring.dossiermedical.entities.Prescription;
 import emi.spring.dossiermedical.repositories.FicheConsultationRepository;
 import emi.spring.dossiermedical.repositories.PrescriptionRepository;
 import jakarta.transaction.Transactional;
@@ -20,18 +18,23 @@ public class FicheConsultationService {
     private FicheConsultationRepository ficheConsultationRepository;
     private PrescriptionService prescriptionService;
     private OperationAnalyseService operationAnalyseService;
+    private ConsultationService consultationService;
 
-    public FicheConsultationService(FicheConsultationRepository ficheConsultationRepository,PrescriptionService prescriptionService,OperationAnalyseService operationAnalyseService) {
+    public FicheConsultationService(FicheConsultationRepository ficheConsultationRepository,PrescriptionService prescriptionService,OperationAnalyseService operationAnalyseService, ConsultationService consultationService) {
         this.ficheConsultationRepository = ficheConsultationRepository;
         this.prescriptionService = prescriptionService;
         this.operationAnalyseService = operationAnalyseService;
+        this.consultationService = consultationService;
     }
 
     public FicheConsultation create(FicheConsultation ficheConsultation) {
+        Consultation consultation =consultationService.create(ficheConsultation.getConsultation());
+        ficheConsultation.getConsultation().setId(consultation.getId());
         Optional<FicheConsultation> ficheConsultationOptional = ficheConsultationRepository.findById(ficheConsultation.getNumeroFiche());
         if(ficheConsultationOptional.isPresent()) {
             return ficheConsultation;
         }
+
         return ficheConsultationRepository.save(ficheConsultation);
     }
 
@@ -62,13 +65,18 @@ public class FicheConsultationService {
     }
 
 
-    public ResponseEntity<String> addPrescriptionAuDossier(Prescription prescription, int id) {
+    public ResponseEntity<String> addPrescriptionAuDossier(Long id_prescription, int id) {
         if(this.getFicheConsultationById(id) != null) {
-            Prescription fiche = prescriptionService.create(prescription);
+            if (prescriptionService.getPrescriptionById(id_prescription) != null) {
+            Prescription prescription = prescriptionService.getPrescriptionById(id_prescription);
             FicheConsultation ficheConsultation = this.getFicheConsultationById(id);
             ficheConsultation.getPrescriptions().add(prescription);
             return ResponseEntity.status(200).body("ajout effectué avec succes!");
+        } else {
+            return ResponseEntity.status(404).body("prescription avec l'ID " + id + " introuvable.");
+            }
         }
+
         else {
             return ResponseEntity.status(404).body("Fiche Consultation avec l'ID " + id + " introuvable.");
         }
@@ -93,12 +101,17 @@ public class FicheConsultationService {
     }
 
 
-    public ResponseEntity<String> addOperationAnalyseAuDossier(OperationAnalyse operationAnalyse, int id) {
+    public ResponseEntity<String> addOperationAnalyseAuDossier(Long id_operation, int id) {
         if(this.getFicheConsultationById(id) != null) {
-            OperationAnalyse fiche = operationAnalyseService.create(operationAnalyse);
-            FicheConsultation ficheConsultation = this.getFicheConsultationById(id);
-            ficheConsultation.getOperationAnalyses().add(operationAnalyse);
-            return ResponseEntity.status(200).body("ajout effectué avec succes!");
+            if(operationAnalyseService.getOperationAnalyseById(id_operation) != null) {
+                OperationAnalyse operationAnalyse = operationAnalyseService.getOperationAnalyseById(id_operation);
+                FicheConsultation ficheConsultation = this.getFicheConsultationById(id);
+                ficheConsultation.getOperationAnalyses().add(operationAnalyse);
+                return ResponseEntity.status(200).body("ajout effectué avec succes!");
+            }
+            else{
+                return ResponseEntity.status(404).body("Operation avec l'ID " + id + " introuvable.");
+            }
         }
         else {
             return ResponseEntity.status(404).body("Fiche Consultation avec l'ID " + id + " introuvable.");

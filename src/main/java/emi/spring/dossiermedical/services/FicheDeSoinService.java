@@ -1,5 +1,6 @@
 package emi.spring.dossiermedical.services;
 
+import emi.spring.dossiermedical.entities.DossierMedical;
 import emi.spring.dossiermedical.entities.FicheDeSoin;
 import emi.spring.dossiermedical.repositories.FicheDeSoinRepository;
 import jakarta.transaction.Transactional;
@@ -14,15 +15,14 @@ public class FicheDeSoinService {
 
     private FicheDeSoinRepository ficheDeSoinRepository;
 
+
     public FicheDeSoinService(FicheDeSoinRepository ficheDeSoinRepository) {
         this.ficheDeSoinRepository = ficheDeSoinRepository;
     }
 
     public FicheDeSoin create(FicheDeSoin ficheDeSoin) {
-        Optional<FicheDeSoin> ficheDeSoinOptional = ficheDeSoinRepository.findById(ficheDeSoin.getNumeroFiche());
-        if(ficheDeSoinOptional.isPresent()) {
-            return ficheDeSoin;
-        }
+//        DossierMedical dossierMedical =dossierMedicalService.create(ficheDeSoin.getDossierMedical());
+//        ficheDeSoin.getDossierMedical().setId(dossierMedical.getId());
         return ficheDeSoinRepository.save(ficheDeSoin);
     }
 

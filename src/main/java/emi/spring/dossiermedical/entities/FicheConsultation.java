@@ -18,12 +18,12 @@ public class FicheConsultation extends FicheDeSoin{
     @JoinColumn(name= "consultation_id")
     private Consultation consultation;
 
-    @OneToMany
-    @JoinColumn(name="prescription_id")
+    @OneToMany()
+    @JoinColumn(name="fiche_id")
     private List<Prescription> prescriptions = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name="operationAnalyse_id")
+    @JoinColumn(name="fiche_id")
     private List<OperationAnalyse> operationAnalyses = new ArrayList<>();
 
     public FicheConsultation(String compteRendu, Consultation consultation, List<Prescription> prescriptions, List<OperationAnalyse> operationAnalyses) {

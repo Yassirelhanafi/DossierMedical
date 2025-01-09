@@ -17,8 +17,7 @@ public class Prescription {
     private String periode;
     private String indication;
 
-    public Prescription(Long id, String designation, String periode, String indication) {
-        this.id = id;
+    public Prescription(String designation, String periode, String indication) {
         this.designation = designation;
         this.periode = periode;
         this.indication = indication;

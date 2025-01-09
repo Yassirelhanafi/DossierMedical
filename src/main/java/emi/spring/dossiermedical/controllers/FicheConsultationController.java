@@ -45,23 +45,23 @@ public class FicheConsultationController {
     }
 
 
-    @RequestMapping("/ddPrescriptionAuDossier/{id}")
-    public ResponseEntity<String> addPrescriptionAuDossier(@RequestBody Prescription prescription, @PathVariable int id) {
-       return ficheConsultationService.addPrescriptionAuDossier(prescription, id);
+    @PatchMapping("/ddPrescriptionAuDossier/{id}/{id_prescription}")
+    public ResponseEntity<String> addPrescriptionAuDossier(@PathVariable Long id_prescription, @PathVariable int id) {
+       return ficheConsultationService.addPrescriptionAuDossier(id_prescription, id);
     }
 
-    @RequestMapping("/removeOperationAnalyseDuDossier/{id}/{id_fichier}")
+    @PatchMapping("/removeOperationAnalyseDuDossier/{id}/{id_fichier}")
     public ResponseEntity<String> removeOperationAnalyseDuDossier(@PathVariable Long id_operationAnalyse, @PathVariable int id) {
        return ficheConsultationService.removeOperationAnalyseDuDossier(id_operationAnalyse, id);
     }
 
-    @RequestMapping("/addOperationAnalyseAuDossier/{id}")
-    public ResponseEntity<String> addOperationAnalyseAuDossier(@RequestBody OperationAnalyse operationAnalyse,@PathVariable int id) {
-        return ficheConsultationService.addOperationAnalyseAuDossier(operationAnalyse, id);
+    @PatchMapping("/addOperationAnalyseAuDossier/{id}/{id_operation}")
+    public ResponseEntity<String> addOperationAnalyseAuDossier(@PathVariable Long id_operation,@PathVariable int id) {
+        return ficheConsultationService.addOperationAnalyseAuDossier(id_operation, id);
     }
 
 
-    @RequestMapping("/removePrescriptionDuDossier/{id}/{id_fichier}")
+    @PatchMapping("/removePrescriptionDuDossier/{id}/{id_fichier}")
     public ResponseEntity<String> removePrescriptionDuDossier(@PathVariable Long id_prescription,@PathVariable int id) {
        return ficheConsultationService.removePrescriptionDuDossier(id_prescription, id);
 
